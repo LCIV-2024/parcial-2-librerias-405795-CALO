@@ -37,14 +37,14 @@ class UserServiceTest {
     void setUp() {
         testUser = new User();
         testUser.setId(1L);
-        testUser.setName("Juan Pérez");
-        testUser.setEmail("juan@example.com");
+        testUser.setName("Julian Calo");
+        testUser.setEmail("juliancalo@example.com");
         testUser.setPhoneNumber("123456789");
         testUser.setCreatedAt(LocalDateTime.now());
         
         userRequestDTO = new UserRequestDTO();
-        userRequestDTO.setName("Juan Pérez");
-        userRequestDTO.setEmail("juan@example.com");
+        userRequestDTO.setName("Julian Calo");
+        userRequestDTO.setEmail("juliancalo@example.com");
         userRequestDTO.setPhoneNumber("123456789");
     }
     
@@ -110,8 +110,9 @@ class UserServiceTest {
     
     @Test
     void testUpdateUser_Success() {
+        userRequestDTO.setEmail("nuevo@example.com");
         when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
-        when(userRepository.existsByEmail(anyString())).thenReturn(false);
+        when(userRepository.existsByEmail("nuevo@example.com")).thenReturn(false);
         when(userRepository.save(any(User.class))).thenReturn(testUser);
         
         UserResponseDTO result = userService.updateUser(1L, userRequestDTO);
